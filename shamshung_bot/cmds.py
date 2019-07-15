@@ -14,7 +14,8 @@ class CmdSet:
 
 
 class ArgError(Exception):
-	pass
+	def __init__(self, message='Invalid paramaters given'):
+		super().__init__(message)
 
 
 class Cmd:
