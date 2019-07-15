@@ -13,3 +13,6 @@ class Prefix(Base):
 	__tablename__ = 'prefixes'
 	server_id = Column(BigInteger, primary_key=True)
 	prefix = Column(String(32))
+
+
+Base.metadata.create_all(engine)
