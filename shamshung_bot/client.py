@@ -21,7 +21,7 @@ class ShamshungBot(discord.Client):
 		logging.info(f'Message from {msg.author}: {msg.content}')
 		session = db.Session()
 		prefix = 'shamshung.'
-		for i in session.query(db.Prefix).filter(Prefix.server_id == msg.guild.id):
+		for i in session.query(db.Prefix).filter(db.Prefix.server_id == msg.guild.id):
 			prefix = i.prefix
 		
 		if msg.content.startswith(prefix):
