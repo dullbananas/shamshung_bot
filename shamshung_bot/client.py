@@ -1,7 +1,8 @@
 import discord
 import logging
 import shlex
-from . import db, cmds
+from . import db
+from .cmds import cmds
 
 logging.basicConfig(level=logging.INFO)
 
@@ -25,5 +26,10 @@ class ShamshungBot(discord.Client):
 			prefix = i.prefix
 		
 		if msg.content.startswith(prefix):
-			args = shlex.split(msg.content[len(prefix):])
-			await msg.channel.send(repr(args))
+			try:
+				args = shlex.split(msg.content[len(prefix):])
+				await msg.channel.send(cmds[args[0]](args))
+			except KeyError:
+				await msg.channel.send('Invalid command')
+			except IndexError:
+				await msg.channel.send('No command given')
