@@ -41,4 +41,7 @@ cmds = CmdSet()
 
 @cmds.new(desc='Sends text from bot', usage='say <message>')
 def say(args):
-	return args[1]
+	try:
+		return args[1]
+	except IndexError:
+		raise ArgError('No message given')
