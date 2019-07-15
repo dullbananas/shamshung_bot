@@ -32,10 +32,10 @@ class Cmd:
 		try:
 			return self.func(args)
 		except ArgError as e:
-			return f'{self.name}: invalid parameters given: {e.message}\nusage: {self.usage}'
+			return f'Error: {e.message}\nUsage: {self.usage}'
 		except Exception as e:
 			tb = traceback.format_exc()
-			return f'**Unexpected error occured**\n\n```{tb}```'
+			return f'Unexpected error:\n```{tb}```'
 
 
 cmds = CmdSet()
