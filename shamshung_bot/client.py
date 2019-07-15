@@ -28,7 +28,7 @@ class ShamshungBot(discord.Client):
 		if msg.content.startswith(prefix):
 			try:
 				args = shlex.split(msg.content[len(prefix):])
-				await msg.channel.send(cmds[args[0]](args))
+				await msg.channel.send(cmds.cmds[args[0]](args))
 			except KeyError:
 				await msg.channel.send('Invalid command')
 			except IndexError:
