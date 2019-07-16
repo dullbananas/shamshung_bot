@@ -1,0 +1,3 @@
+swears = [
+	'this-is-swearing',
+]

@@ -3,6 +3,7 @@ import logging
 import shlex
 from . import db
 from .cmds import cmds
+from .swears import swears
 
 logging.basicConfig(level=logging.INFO)
 
@@ -28,8 +29,14 @@ class ShamshungBot(discord.Client):
 		if msg.content.startswith(prefix):
 			try:
 				args = shlex.split(msg.content[len(prefix):])
-				await msg.channel.send(cmds.cmds[args[0]](args))
+				output = cmds.cmds[args[0]](args)
 			except KeyError:
-				await msg.channel.send('Invalid command')
+				output = 'Invalid command'
 			except IndexError:
-				await msg.channel.send('No command given')
+				output = 'No command given'
+			
+			for swear in swears:
+				if swear.lower() in output.lower():
+					await msg.channel.send('STOP MAKIN\' ME SWEAR')
+			
+			await msg.channel.send(output)
