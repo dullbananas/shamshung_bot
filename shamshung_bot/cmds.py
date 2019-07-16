@@ -1,7 +1,6 @@
 import traceback
 import inspect
 import random
-from tabulate import tabulate
 from . import utils
 
 
@@ -63,13 +62,21 @@ def say(args):
 
 
 @cmds.new(desc='Displays info about all commands')
-def help():
-	table = []
-	for cmd in cmds.cmds.values():
-		table.append([cmd.usage, cmd.desc])
-	text = tabulate(table, headers=['Command', 'Description'], tablefmt='fancy_grid')
+def help(args):
+	if len(args) > 1:
+		try:
+			cmd = cmds.cmds[args[1]]
+		except KeyError:
+			return 'Command not found'
+		text = f'**{cmd.name}**\nUsage: `{cmd.usage}`\nDescription: {cmd.desc}'
+	else:
+		text = '**Shamshung Bot Commands**\n'
+		names = [f' - {cmd.name}' for cmd in cmds.cmds]
+		text += '\n'.join(names.sort())
+		text += '\n\nTo give a parameter with spaces to a command, put it in quotes: shamshung.say "FBI OPEN UP!!!!!"'
+			
 	footer = 'Made by Dull Bananas - https://dull.pythonanywhere.com\nGitHub repository: https://github.com/dullbananas/shamshung_bot'
-	return f'```{text}```\n{footer}'
+	return f'{text}\n\n{footer}'
 
 
 @cmds.new(desc='Displays either a random recently posted meme on cleanmemes.com, or a meme created my the creators of this bot')
