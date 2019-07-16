@@ -1,10 +1,14 @@
 import traceback
+from tabulate import tabulate
 
 
 class CmdSet:
 	
 	def __init__(self):
 		self.cmds = {}
+	
+	def __getitem__(self, key):
+		return self.cmds[key]
 	
 	def new(self, *args, **kwargs):
 		def decor(f):
@@ -36,7 +40,7 @@ class Cmd:
 		except Exception as e:
 			tb = traceback.format_exc()
 			return f'Unexpected error:\n```{tb}```'
-
+	
 
 cmds = CmdSet()
 
@@ -47,3 +51,12 @@ def say(args):
 		return args[1]
 	except IndexError:
 		raise ArgError('No message given')
+
+
+@cmds.new(desc='Displays info about all commands')
+def help(args):
+	table = []
+	for cmd in cmds.cmds:
+		table.append([cmd.name, cmd.usage, cmd.desc])
+	text = tabulate(table, headers=['Name', 'Usage', 'Description'], tablefmt='fancy_grid')
+	return f'```{text}```'
