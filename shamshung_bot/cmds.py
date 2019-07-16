@@ -59,4 +59,4 @@ def help(args):
 	for cmd in cmds.cmds:
 		table.append([cmd.name, cmd.usage, cmd.desc])
 	text = tabulate(table, headers=['Name', 'Usage', 'Description'], tablefmt='fancy_grid')
-	return f'```{text}```'
+	return f'```{text}```'
