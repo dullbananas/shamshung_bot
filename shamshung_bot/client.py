@@ -38,5 +38,6 @@ class ShamshungBot(discord.Client):
 			for swear in swears:
 				if swear.lower() in output.lower():
 					await msg.channel.send('STOP MAKIN\' ME SWEAR')
+					return
 			
 			await msg.channel.send(output)
