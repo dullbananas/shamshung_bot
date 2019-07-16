@@ -57,6 +57,6 @@ def say(args):
 def help(args):
 	table = []
 	for cmd in cmds.cmds.values():
-		table.append([cmd.name, cmd.usage, cmd.desc])
-	text = tabulate(table, headers=['Name', 'Usage', 'Description'], tablefmt='fancy_grid')
+		table.append([cmd.usage, cmd.desc])
+	text = tabulate(table, headers=['Command', 'Description'], tablefmt='fancy_grid')
 	return f'```{text}```'
