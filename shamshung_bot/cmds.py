@@ -35,7 +35,7 @@ class Cmd:
 		self.desc = desc
 		self.usage = usage
 	
-	def _filter_args(args, func):
+	def _filter_args(self, args, func):
 		sig = inspect.signature(func)
 		filter_keys = [param.name for param in sig.parameters.values() if param.kind == param.POSITIONAL_OR_KEYWORD]
 		filtered_args = {key:args[key] for key in filter_keys()}
