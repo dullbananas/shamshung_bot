@@ -71,4 +71,4 @@ def meme(args):
 	parser = utils.ImageExtractor()
 	parser.feed(str(wp))
 	urls = filter((lambda x: 'gravatar' not in x), parser.urls)
-	return random.choice(urls)
+	return random.choice(list(urls))
