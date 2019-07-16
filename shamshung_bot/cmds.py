@@ -72,7 +72,7 @@ def help(args):
 	else:
 		text = '**Shamshung Bot Commands**\n'
 		names = [f' - {cmd.name}' for cmd in cmds.cmds.values()]
-		text += '\n'.join(names.sort())
+		text += '\n'.join(list(names.sort()))
 		text += '\n\nTo give a parameter with spaces to a command, put it in quotes: shamshung.say "FBI OPEN UP!!!!!"'
 			
 	footer = 'Made by Dull Bananas - https://dull.pythonanywhere.com\nGitHub repository: https://github.com/dullbananas/shamshung_bot'
