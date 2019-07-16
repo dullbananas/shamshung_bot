@@ -5,6 +5,7 @@ import requests
 class ImageExtractor(HTMLParser):
 	urls = []
 	def handle_starttag(self, tag, attrs):
+		attrs = dict(attrs)
 		if tag == 'img' and 'src' in attrs.keys():
 			self.urls.append(attrs['src'])
 
