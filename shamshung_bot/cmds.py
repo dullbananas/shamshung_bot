@@ -56,7 +56,7 @@ def say(args):
 @cmds.new(desc='Displays info about all commands')
 def help(args):
 	table = []
-	for cmd in cmds:
+	for cmd in cmds.values():
 		table.append([cmd.name, cmd.usage, cmd.desc])
 	text = tabulate(table, headers=['Name', 'Usage', 'Description'], tablefmt='fancy_grid')
 	return f'```{text}```'
