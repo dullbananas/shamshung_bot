@@ -1,5 +1,7 @@
 import traceback
+import random
 from tabulate import tabulate
+from . import utils
 
 
 class CmdSet:
@@ -61,3 +63,12 @@ def help(args):
 	text = tabulate(table, headers=['Command', 'Description'], tablefmt='fancy_grid')
 	footer = 'Made by Dull Bananas - https://dull.pythonanywhere.com\nGitHub repository: https://github.com/dullbananas/shamshung_bot'
 	return f'```{text}```\n{footer}'
+
+
+@cmds.new(desc='Displays a random recently posted meme on cleanmemes.com')
+def meme(args):
+	wp = utils.read_webpage('https://cleanmemes.com')
+	parser = utils.ImageExtractor()
+	parser.feed(str(wp))
+	urls = filter((lambda x: 'gravatar' not in x), parser.urls)
+	return random.choice(urls)

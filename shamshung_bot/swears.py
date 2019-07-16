@@ -4,4 +4,5 @@ swears = [
 	'bitch',
 	'fuck',
 	'shit',
+	'dick',
 ]
