@@ -29,7 +29,12 @@ class ShamshungBot(discord.Client):
 		if msg.content.startswith(prefix):
 			try:
 				args = shlex.split(msg.content[len(prefix):])
-				output = cmds.cmds[args[0]](args)
+				output = cmds.cmds[args[0]]({
+					'args': args,
+					'msg': msg,
+					'prefix': prefix,
+					'session': session,
+				})
 			except KeyError:
 				output = 'Invalid command'
 			except IndexError:

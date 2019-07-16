@@ -1,4 +1,5 @@
 import traceback
+import inspect
 import random
 from tabulate import tabulate
 from . import utils
@@ -34,12 +35,18 @@ class Cmd:
 		self.desc = desc
 		self.usage = usage
 	
-	def __call__(self, args):
+	def _filter_args(args, func):
+		sig = inspect.signature(func)
+		filter_keys = [param.name for param in sig.parameters.values() if param.kind == param.POSITIONAL_OR_KEYWORD]
+		filtered_args = {key:args[key] for key in filter_keys()}
+		return filtered_args
+	
+	def __call__(self, kwargs):
 		try:
-			return self.func(args)
+			return self.func(**self._filter_args(kwargs, self.func))
 		except ArgError as e:
 			return f'Error: {e.message}\nUsage: {self.usage}'
-		except Exception as e:
+		except Exception:
 			tb = traceback.format_exc()
 			return f'Unexpected error:\n```{tb}```'
 	
@@ -56,7 +63,7 @@ def say(args):
 
 
 @cmds.new(desc='Displays info about all commands')
-def help(args):
+def help():
 	table = []
 	for cmd in cmds.cmds.values():
 		table.append([cmd.usage, cmd.desc])
@@ -65,10 +72,15 @@ def help(args):
 	return f'```{text}```\n{footer}'
 
 
-@cmds.new(desc='Displays a random recently posted meme on cleanmemes.com')
-def meme(args):
+@cmds.new(desc='Displays either a random recently posted meme on cleanmemes.com, or a meme created my the creators of this bot')
+def meme():
 	wp = utils.read_webpage('https://cleanmemes.com')
 	parser = utils.ImageExtractor()
 	parser.feed(str(wp))
-	urls = filter((lambda x: 'gravatar' not in x), parser.urls)
-	return random.choice(list(urls))
+	urls = list(filter((lambda x: 'gravatar' not in x), parser.urls)) + [
+		# Sam sung his last song
+		'https://doc-0g-60-docs.googleusercontent.com/docs/securesc/ha0ro937gcuc7l7deffksulhg5h7mbp1/fjbrofpv1ilind9qnuejm3s3j0msmjpa/1563292800000/00697965516584679432/*/1aFvFNjHpN4pVLax3KB-HWNRN7hVRFqdB?e=download',
+		# Cupcake
+		'https://doc-00-7s-docs.googleusercontent.com/docs/securesc/ha0ro937gcuc7l7deffksulhg5h7mbp1/pvlb13585lfho7cqrvmpvgf6juuh6la6/1563292800000/05448460070245808790/*/1yqoto8VYH5Dwvlu1W4GNgwSTmELjT11R?e=download',
+	]
+	return random.choice(urls)
