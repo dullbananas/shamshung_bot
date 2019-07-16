@@ -52,7 +52,7 @@ def say(args):
 	except IndexError:
 		raise ArgError('No message given')
 
-
+
 @cmds.new(desc='Displays info about all commands')
 def help(args):
 	table = []
