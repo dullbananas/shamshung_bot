@@ -59,4 +59,5 @@ def help(args):
 	for cmd in cmds.cmds.values():
 		table.append([cmd.usage, cmd.desc])
 	text = tabulate(table, headers=['Command', 'Description'], tablefmt='fancy_grid')
-	return f'```{text}```'
+	footer = 'Made by Dull Bananas - https://dull.pythonanywhere.com\nGitHub repository: https://github.com/dullbananas/shamshung_bot'
+	return f'```{text}```\n{footer}'
