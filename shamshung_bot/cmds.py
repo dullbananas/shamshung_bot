@@ -71,7 +71,7 @@ def help(args):
 		text = f'**{cmd.name}**\nUsage: `{cmd.usage}`\nDescription: {cmd.desc}'
 	else:
 		text = '**Shamshung Bot Commands**\n'
-		names = [f' - {cmd.name}' for cmd in cmds.cmds]
+		names = [' - {cmd.name}'.format(cmd=cmd) for cmd in cmds.cmds]
 		text += '\n'.join(names.sort())
 		text += '\n\nTo give a parameter with spaces to a command, put it in quotes: shamshung.say "FBI OPEN UP!!!!!"'
 			
