@@ -31,7 +31,8 @@ class ShamshungBot(discord.Client):
 				try:
 					args = shlex.split(msg.content[len(prefix):])
 				except ValueError as e:
-					await msg.channel.send(f'Error: {e.message}')
+					emsg = str(e)
+					await msg.channel.send(f'Error: {emsg}')
 				output = cmds.cmds[args[0]]({
 					'args': args,
 					'msg': msg,
