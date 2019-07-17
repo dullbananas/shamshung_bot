@@ -91,3 +91,8 @@ def meme():
 		'https://doc-00-7s-docs.googleusercontent.com/docs/securesc/ha0ro937gcuc7l7deffksulhg5h7mbp1/pvlb13585lfho7cqrvmpvgf6juuh6la6/1563292800000/05448460070245808790/*/1yqoto8VYH5Dwvlu1W4GNgwSTmELjT11R?e=download',
 	]
 	return random.choice(urls)
+
+
+@cmds.new(desc='Sorts the given parameters in alphabetical order', usage='sort <text>...')
+def sort(args):
+	return '\n'.join(sorted(args[1:]))
