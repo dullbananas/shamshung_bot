@@ -75,7 +75,7 @@ def help(args):
 		text += '\n'.join(sorted(names))
 		text += '\n\nTo give a parameter with spaces to a command, put it in quotes: shamshung.say "FBI OPEN UP!!!!!"'
 			
-	footer = 'Made by Dull Bananas - https://dull.pythonanywhere.com\nGitHub repository: https://github.com/dullbananas/shamshung_bot'
+	footer = 'Made by Dull Bananas - https://dull.pythonanywhere.com\nGitHub repository: https://github.com/dullbananas/shamshung_bot' if not len(args) > 1 else ''
 	return f'{text}\n\n{footer}'
 
 
