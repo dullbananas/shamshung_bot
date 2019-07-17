@@ -28,7 +28,10 @@ class ShamshungBot(discord.Client):
 		
 		if msg.content.startswith(prefix):
 			try:
-				args = shlex.split(msg.content[len(prefix):])
+				try:
+					args = shlex.split(msg.content[len(prefix):])
+				except ValueError as e:
+					await msg.channel.send(f'Error: {e.message}')
 				output = cmds.cmds[args[0]]({
 					'args': args,
 					'msg': msg,
