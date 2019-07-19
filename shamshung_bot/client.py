@@ -44,7 +44,7 @@ class ShamshungBot(discord.Client):
 			except IndexError:
 				output = Result('No command given')
 			
-			if output == None:
+			if output.text == None:
 				outtext = ''
 			else:
 				outtext = output.text
