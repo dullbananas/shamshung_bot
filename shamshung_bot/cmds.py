@@ -44,10 +44,10 @@ class Cmd:
 		try:
 			return self.func(**self._filter_args(kwargs, self.func))
 		except ArgError as e:
-			return f'Error: {e.message}\nUsage: {self.usage}'
+			return Result(f'Error: {e.message}\nUsage: {self.usage}')
 		except Exception:
 			tb = traceback.format_exc()
-			return f'Unexpected error:\n```{tb}```'
+			return Result(f'Unexpected error:\n```{tb}```')
 
 
 class Result:
