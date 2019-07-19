@@ -44,8 +44,13 @@ class ShamshungBot(discord.Client):
 			except IndexError:
 				output = Result('No command given')
 			
+			if output == None:
+				outtext = ''
+			else:
+				outtext = output.text
+			
 			for swear in swears:
-				if swear.lower() in output.text.lower():
+				if swear.lower() in outtext.lower():
 					await msg.channel.send('STOP MAKIN\' ME SWEAR')
 					return
 			
