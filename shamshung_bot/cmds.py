@@ -56,7 +56,8 @@ class Result:
 		self.kwargs = kwargs
 	
 	def get_dict(self):
-		d = {content=self.text, **self.kwargs}
+		d = self.kwargs
+		d['content'] = self.text
 		return d
 	
 
