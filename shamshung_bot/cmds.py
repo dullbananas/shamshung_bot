@@ -48,6 +48,16 @@ class Cmd:
 		except Exception:
 			tb = traceback.format_exc()
 			return f'Unexpected error:\n```{tb}```'
+
+
+class Result:
+	def __init__(self, text=None, **kwargs):
+		self.text = text
+		self.kwargs = kwargs
+	
+	def get_dict(self):
+		d = {content=self.text, **self.kwargs}
+		return d
 	
 
 cmds = CmdSet()
@@ -56,7 +66,7 @@ cmds = CmdSet()
 @cmds.new(desc='Sends text from bot', usage='say <message>')
 def say(args):
 	try:
-		return args[1]
+		return Result(args[1])
 	except IndexError:
 		raise ArgError('No message given')
 
@@ -76,7 +86,7 @@ def help(args):
 		text += '\n\nTo give a parameter with spaces to a command, put it in quotes: shamshung.say "FBI OPEN UP!!!!!"'
 			
 	footer = 'Made by Dull Bananas - https://dull.pythonanywhere.com\nGitHub repository: https://github.com/dullbananas/shamshung_bot' if not len(args) > 1 else ''
-	return f'{text}\n\n{footer}'
+	return Result(f'{text}\n\n{footer}')
 
 
 @cmds.new(desc='Displays either a random recently posted meme on cleanmemes.com, or a meme created my the creators of this bot')
@@ -90,9 +100,29 @@ def meme():
 		# Cupcake
 		'https://doc-00-7s-docs.googleusercontent.com/docs/securesc/ha0ro937gcuc7l7deffksulhg5h7mbp1/pvlb13585lfho7cqrvmpvgf6juuh6la6/1563292800000/05448460070245808790/*/1yqoto8VYH5Dwvlu1W4GNgwSTmELjT11R?e=download',
 	]
-	return random.choice(urls)
+	return Result(random.choice(urls))
 
 
 @cmds.new(desc='Sorts the given parameters in alphabetical order', usage='sort <text>...')
 def sort(args):
-	return '\n'.join(sorted(args[1:]))
+	return Result('\n'.join(sorted(args[1:])))
+
+
+@cmds.new(desc='Shows a random color')
+def randcolor(msg):
+	from PIL import Image
+	import discord
+	
+	img = Image.new('RGB', (64,64), (random.randrange(256), random.randrange(256), random.randrange(256)))
+	msg_id = str(msg.id)
+	filename = f'temp/rand_color_{msg_id}.png'
+	
+	img.save(filename)
+	fp = open(filename, 'rb')
+	return Result(file=discord.File(fp))
+	
+	
+	
+	
+	
+	

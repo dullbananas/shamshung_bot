@@ -49,4 +49,7 @@ class ShamshungBot(discord.Client):
 					await msg.channel.send('STOP MAKIN\' ME SWEAR')
 					return
 			
-			await msg.channel.send(output)
+			if type(output) == str:
+				await msg.channel.send(output)
+			else:
+				await msg.channel.send(**output.get_dict())
